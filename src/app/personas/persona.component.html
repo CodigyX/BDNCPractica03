@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Empleados Details</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
+    <style>
+        .action-buttons button {
+            margin-right: 15px;
+        }
+        .btn-danger {
+            background-color: rgb(143, 15, 15);
+            border-color: rgb(143, 15, 15);
+        }
+        .table-title h2 {
+            font-size: 24px;
+            text-align: center;
+            width: 100%;
+        }
+        .centered-buttons {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 15px;
+        }
+        .full-width-button {
+            width: 100%;
+        }
+        .table-wrapper {
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="container-lg mt-5">
+        <div class="table-responsive mb-4">
+            <div class="table-wrapper shadow-sm p-3 bg-white rounded">
+                <div class="table-title d-flex flex-column align-items-center mb-4">
+                    <h2><b>LISTA DE PERSONAS</b></h2>
+                    <h2></h2>
+                    <h2></h2>
+                    <div class="centered-buttons full-width-button">
+                        <button type="button" class="btn btn-primary btn-sm full-width-button" (click)="addNewRow()">
+                            <i class="material-symbols-outlined">person_add</i>
+                        </button>
+                    </div>
+                </div>
+                <table class="table table-striped table-hover">
+                    <thead class="table-dark">
+                        <tr>
+                            <th>Nombre</th>
+                            <th>Dirección</th>
+                            <th>Teléfono</th>
+                            <th>Botones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let row of rows; let i = index">
+                            <td>
+                                <span *ngIf="!row.isEditing; else editName">{{ row.nombre }}</span>
+                                <ng-template #editName>
+                                    <input type="text" class="form-control" [(ngModel)]="row.nombre">
+                                </ng-template>
+                            </td>
+                            <td>
+                                <span *ngIf="!row.isEditing; else editAddress">{{ row.direccion }}</span>
+                                <ng-template #editAddress>
+                                    <input type="text" class="form-control" [(ngModel)]="row.direccion">
+                                </ng-template>
+                            </td>
+                            <td>
+                                <span *ngIf="!row.isEditing; else editPhone">{{ row.telefono }}</span>
+                                <ng-template #editPhone>
+                                    <input type="text" class="form-control" [(ngModel)]="row.telefono">
+                                </ng-template>
+                            </td>
+                            <td>
+                                <div class="action-buttons d-flex justify-content-center">
+                                    <span *ngIf="row.isEditing">
+                                        <button (click)="addRow(row)" class="btn btn-success btn-sm" title="Add"><i class="material-symbols-outlined">check</i></button>
+                                        <button (click)="cancel(row)" class="btn btn-danger btn-sm" title="Cancel"><i class="material-symbols-outlined">close</i></button>
+                                    </span>
+                                    <span *ngIf="!row.isEditing">
+                                        <button (click)="startEdit(row)" class="btn btn-warning btn-sm" title="Edit"><i class="material-symbols-outlined">edit</i></button>
+                                        <button (click)="deleteRow(i)" class="btn btn-danger btn-sm" title="Delete"><i class="material-symbols-outlined">delete</i></button>
+                                    </span>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+</body>
+</html>
